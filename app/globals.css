@@ -2,10 +2,6 @@
 
 @plugin "daisyui";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Define themes using @theme */
 @theme {
   --theme-synthwave: {
