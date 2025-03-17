@@ -8,7 +8,10 @@ interface Props {
 
 const page = ({ params }: Props) => {
     return (
-        <div>page {params.refid}</div>
+        <>
+            <div>page {params.refid}</div>
+            <button className="btn btn-primary">Primary</button>
+        </>
     )
 }
 
