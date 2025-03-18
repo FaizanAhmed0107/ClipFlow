@@ -1,24 +1,26 @@
+'use client'
+
 import React from 'react'
+import { useParams } from "next/navigation";
 import { MdSave } from "react-icons/md";
 import { FaCopy } from "react-icons/fa6";
 import { IoMdRefresh } from "react-icons/io";
+import CopyToClipboard from './CopyToClipboard';
 
-interface Props {
-    params: {
-        refid: string
-    }
-}
+const page = () => {
+    const params = useParams();
+    const refid = params?.refid as string;
 
-const page = ({ params }: Props) => {
     return (
         <>
             <div className='flex gap-10 flex-col items-center h-[calc(100vh-100px)] py-10'>
                 <div>
                     <p>Link to this clipboard</p>
-                    <label className="input">
-                        <p className='text-2xl'>{params.refid}</p>
+                    {/* <label className="input">
+                        <p className='text-2xl'>{refid}</p>
                         <span className="label"> <FaCopy className='w-5 h-5' /></span>
-                    </label>
+                    </label> */}
+                    <CopyToClipboard refid={refid} />
 
                 </div>
                 <div className='w-[80%] max-w-4xl'>
