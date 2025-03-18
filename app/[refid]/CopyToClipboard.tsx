@@ -17,12 +17,10 @@ const CopyToClipboard = ({ refid }: { refid: string }) => {
             <p className="text-2xl">{refid}</p>
             <span className="label relative w-5 h-5">
                 <FaCopy
-                    className={`absolute w-5 h-5 transition-opacity duration-300 ${copied ? "opacity-0" : "opacity-100"
-                        }`}
+                    className={`absolute w-5 h-5 transition-opacity duration-300 ${copied ? "opacity-0" : "opacity-100"}`}
                 />
                 <FaCheck
-                    className={`absolute w-5 h-5 text-green-500 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0"
-                        }`}
+                    className={`absolute w-5 h-5 text-green-500 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0"}`}
                 />
             </span>
         </label>

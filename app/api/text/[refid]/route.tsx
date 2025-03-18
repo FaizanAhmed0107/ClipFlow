@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "../../config/dbConnect";
-import Field from "../../models/fieldModel";
+import connectDB from "../../../config/dbConnect";
+import Field from "../../../models/fieldModel";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, { params }: { params: { refid: string } }) {
     await connectDB();
-    const { text, refid } = await request.json();
+    const { text } = await request.json();
+    const refid = params.refid;
 
     if (!text || !refid) {
         console.log(text, refid);
@@ -28,5 +29,17 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ "message": "Field created successfully.", _id: field.id, refid: field.refid }, { status: 201 });
     } else {
         return NextResponse.json({ "message": "Field creation failed." }, { status: 500 });
+    }
+}
+
+export async function GET(request: NextRequest, { params }: { params: { refid: string } }) {
+    await connectDB();
+    const refid = params.refid;
+
+    const field = await Field.findOne({ refid });
+    if (field) {
+        return NextResponse.json({ text: field.text }, { status: 200 });
+    } else {
+        return NextResponse.json({ "message": "Field not found." }, { status: 404 });
     }
 }
