@@ -11,12 +11,8 @@ interface Props {
 
 const page = ({ params }: Props) => {
     return (
-        // <>
-        //     <div>page {params.refid}</div>
-        //     <button className="btn btn-primary">Primary</button>
-        // </>
         <>
-            <div className='flex flex-col items-center justify-evenly h-[calc(100vh-100px)]'>
+            <div className='flex gap-10 flex-col items-center h-[calc(100vh-100px)] py-10'>
                 <div>
                     <p>Link to this clipboard</p>
                     <label className="input">
@@ -31,7 +27,7 @@ const page = ({ params }: Props) => {
                             focus:outline-none focus:border-transparent 
                             focus-visible:outline-none focus-visible:ring-0 resize-none
                             w-full h-72 "
-                        placeholder="Bio"
+                        placeholder="Type here ..."
                     ></textarea>
                     <div className='flex gap-2 mt-3 px-2.5 items-center justify-between'>
                         <div className='flex gap-2'>
