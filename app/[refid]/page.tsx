@@ -90,7 +90,7 @@ const Page = () => {
                         <button className='btn btn-ghost' onClick={handleRefresh}><IoMdRefresh className='w-6 h-6' />Refresh</button>
                     </div>
                 </div>
-                <input type="file" className="file-input w-[80%] max-w-4xl" />
+                {/* <input type="file" className="file-input w-[80%] max-w-4xl" /> */}
             </div>
         </>
     )
