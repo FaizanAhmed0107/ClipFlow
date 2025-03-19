@@ -44,7 +44,7 @@ const Page = () => {
 
     useEffect(() => {
         handleRefresh();
-    }, []);
+    }, [handleRefresh()]);
 
     return (
         <>

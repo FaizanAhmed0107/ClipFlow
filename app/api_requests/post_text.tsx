@@ -15,7 +15,11 @@ export default async function post_text(refid: string, text: string) {
             const errorResult = await response.json();
             return { success: false, message: errorResult.message || 'No data found!' };
         }
-    } catch (error: any) {
-        return { success: false, message: 'Error getting result.', error: error.message };
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            return { success: false, message: 'Error getting result.', error: error.message };
+        } else {
+            return { success: false, message: 'Error getting result.', error: String(error) };
+        }
     }
 }
