@@ -10,7 +10,7 @@ import CopyToClipboard from './CopyToClipboard';
 import post_text from '../api_requests/post_text';
 import get_text from '../api_requests/get_text';
 
-const page = () => {
+const Page = () => {
     const params = useParams();
     const refid = params?.refid as string;
     const [text, setText] = React.useState<string>('');
@@ -94,4 +94,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
