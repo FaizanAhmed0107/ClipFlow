@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useParams } from "next/navigation";
 import { MdSave } from "react-icons/md";
 import { FaCopy } from "react-icons/fa6";
@@ -35,13 +35,15 @@ const Page = () => {
         }).catch(err => console.error("Copy failed:", err));
     }
 
-    const handleRefresh = () => {
+    // Use useCallback to memoize handleRefresh
+    const handleRefresh = useCallback(() => {
         get_text(refid).then(res => {
             console.log(res.data);
             setText(res.data);
         });
-    }
+    }, [refid]); // Only change if refid changes
 
+    // Now useEffect will not re-run unnecessarily
     useEffect(() => {
         handleRefresh();
     }, [handleRefresh]);
