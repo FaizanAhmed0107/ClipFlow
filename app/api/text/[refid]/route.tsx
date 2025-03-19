@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../config/dbConnect";
 import Field from "../../../models/fieldModel";
 
-export async function POST(request: NextRequest, { params }: { params: { refid: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ refid: string }>; }) {
     await connectDB();
     const { text } = await request.json();
-    const refid = params.refid;
+    const { refid } = await params;
 
     if (!text || !refid) {
         console.log(text, refid);
@@ -14,7 +14,6 @@ export async function POST(request: NextRequest, { params }: { params: { refid: 
 
     const fieldAvailable = await Field.findOne({ refid });
     if (fieldAvailable) {
-        // return NextResponse.json({ "message": "Field already exists." }, { status: 400 });
         const field = await Field.findOneAndUpdate(
             { refid },  // Find field by refid
             { text },  // Update fields
@@ -32,9 +31,9 @@ export async function POST(request: NextRequest, { params }: { params: { refid: 
     }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { refid: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ refid: string }>; }) {
     await connectDB();
-    const refid = params.refid;
+    const { refid } = await params;
 
     const field = await Field.findOne({ refid });
     if (field) {
