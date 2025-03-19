@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Page",
+  title: "Clip Flow",
   description: "None",
 };
 
