@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ClipFlow 📋⚡
 
-## Getting Started
+**ClipFlow** is an online clipboard built with Next.js that allows users to store and retrieve text using a unique `refid`. If you visit `https://clipflow.vercel.app`, a new `refid` will be automatically generated, and you will be redirected to it.
 
-First, run the development server:
+## 🛠️ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Auto-Generated RefIDs**: Visiting `https://clipflow.vercel.app` creates a unique `refid` and redirects you.
+- **Persistent Storage**: Each `refid` gets its own text storage area.
+- **Instant Access**: Retrieve or modify stored text by visiting `https://clipflow.vercel.app/{refid}`.
+- **Real-time Syncing**: Updates are automatically saved.
+- **Simple & Secure**: No logins required, ensuring privacy.
+- **Minimalist UI**: Clean, distraction-free interface.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 How It Works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Visit ClipFlow**: Open `https://clipflow.vercel.app`.
+   - A new `refid` will be created, and you will be redirected to `https://clipflow.vercel.app/{new-refid}`.
+2. **Store Text**: Type or paste text into the page.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Retrieve Later**: Open the same URL (`https://clipflow.vercel.app/{refid}`) anytime to view or modify stored content.
 
-## Learn More
+4. **Update Anytime**: Modify text as needed and save them for later or others.
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Next.js**: Server-side rendering and API routes.
+- **Tailwind CSS**: Modern and responsive styling.
+- **DaisyUI**: Pre-styled Tailwind components for a beautiful UI.
+- **React Hooks**: Efficient state management.
 
-## Deploy on Vercel
+### Backend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Node.js**: JavaScript runtime.
+- **MongoDB**: Stores text mapped to each `refid`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Setup Instructions
+
+### Prerequisites
+
+- Node.js (v18+)
+- MongoDB (local or cloud instance)
+
+### Installation
+
+1.  Clone the repository:
+
+    ```sh
+    git clone https://github.com/FaizanAhmed0107/ClipFlow.git
+    cd ClipFlow
+    ```
+
+2.  Install dependencies:
+
+    ```sh
+    npm install
+    ```
+
+3.  Configure environment variables:
+
+    Create a .env.local file and add:
+
+    ```ini
+    MONGODB_URI=your-mongodb-connection-string
+    ```
+
+4.  Start the development server:
+
+    ```sh
+    npm run dev
+    ```
+
+# 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. **Fork the repository**.
+2. **Create a new feature branch**:
+   ```bash
+   git checkout -b feature-branch-name
+   ```
+3. **Commit your changes**:
+   ```bash
+   git commit -m "Description of changes"
+   ```
+4. **Push to your branch**:
+   ```bash
+   git push origin feature-branch-name
+   ```
+5. **Submit a pull request**
+
+## 📬 Contact
+
+For queries or collaboration opportunities, feel free to reach out:
+
+- **Email**: [faizanahmed0107@gmail.com](mailto:faizanahmed0107@gmail.com)
