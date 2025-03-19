@@ -16,10 +16,6 @@ export default async function post_text(refid: string, text: string) {
             return { success: false, message: errorResult.message || 'No data found!' };
         }
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            return { success: false, message: 'Error getting result.', error: error.message };
-        } else {
-            return { success: false, message: 'Error getting result.', error: String(error) };
-        }
+        return { success: false, message: 'Error posting field.', error: error instanceof Error ? error.message : String(error) };
     }
 }
