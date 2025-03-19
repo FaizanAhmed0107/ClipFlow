@@ -12,10 +12,6 @@ export default async function get_text(refid: string) {
             return { success: false, message: errorResult.message || 'No data found!' };
         }
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            return { success: false, message: 'Error getting result.', error: error.message };
-        } else {
-            return { success: false, message: 'Error getting result.', error: String(error) };
-        }
+        return { success: false, message: 'Error getting result.', error: error instanceof Error ? error.message : String(error) };
     }
 }
