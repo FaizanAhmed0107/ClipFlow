@@ -6,16 +6,19 @@ import { MdDeleteForever } from "react-icons/md";
 import upload_file from "../api_requests/upload_file";
 import delete_file from "../api_requests/delete_file";
 import { Bounce, toast } from "react-toastify";
+import { set } from "mongoose";
 
 interface Props {
     fileUrl: string;
     refid: string;
     setFileUrl: (url: string) => void;
+    loading: boolean;
 }
 
-const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
+const UploadFile = ({ fileUrl, refid, setFileUrl, loading }: Props) => {
     const [file, setFile] = useState<File | null>(null);
     const [name, setName] = useState<string>('');
+    const [fileLoading, setFileLoading] = useState<boolean>(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -26,7 +29,9 @@ const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
 
     const handleFileUpload = async () => {
         if (file) {
+            setFileLoading(true);
             const res = await upload_file(refid, file);
+            setFileLoading(false);
             if (res.success) {
                 setFileUrl(res.data.url);
             } else {
@@ -59,7 +64,9 @@ const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
         const modal = document.getElementById("deleteModal") as HTMLDialogElement;
         modal.close(); // Close modal after confirming
         try {
+            setFileLoading(true);
             const res = await delete_file(refid);
+            setFileLoading(false);
             if (res.success) {
                 setFileUrl("None");
             } else {
@@ -109,36 +116,52 @@ const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
     }, [fileUrl, handleGetName]);
 
     return (
-        fileUrl === 'None' ? (
-            <div className="flex w-[80%] gap-2.5 justify-between max-w-4xl py-10">
-                <input type="file" onChange={handleFileChange} className="file-input w-full border rounded-lg focus:outline-none" />
-                <button className="btn btn-primary" onClick={handleFileUpload}>
-                    <FaCloudUploadAlt className="w-5 h-5" /> Upload
-                </button>
-            </div>
-        ) : (
-            <div className="flex w-[80%] gap-2.5 justify-between max-w-4xl py-10 content-center">
-                <p className="w-full border rounded-lg flex items-center p-2">{name}</p>
-                <button className="btn btn-primary flex items-center gap-2" onClick={handleView}>
-                    <LuBookOpenText className="w-5 h-5" /> View
-                </button>
-                <button className="btn btn-error flex items-center gap-2" onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).showModal()}>
-                    <MdDeleteForever className="w-5 h-5" /> Delete
-                </button>
+        loading ? (
+            <span className="loading loading-bars loading-xl"></span>
+        ) :
+            fileUrl === 'None' ? (
+                <div className="flex w-[80%] gap-2.5 justify-between max-w-4xl">
+                    <input type="file" onChange={handleFileChange} className="file-input w-full border rounded-lg focus:outline-none" />
+                    <button className="btn btn-primary" disabled={fileLoading} onClick={handleFileUpload}>
+                        {
+                            fileLoading ?
+                                <span className="loading loading-ring loading-sm"></span>
+                                :
+                                <FaCloudUploadAlt className="w-5 h-5" />
+                        }
+                        Upload
+                    </button>
+                </div>
+            ) : (
+                <div className="flex w-[80%] gap-2.5 justify-between max-w-4xl content-center">
+                    <p className="w-full border rounded-lg flex items-center p-2">{name}</p>
+                    <button className="btn btn-primary flex items-center gap-2" onClick={handleView}>
+                        <LuBookOpenText className="w-5 h-5" /> View
+                    </button>
+                    <button className="btn btn-error flex items-center gap-2" disabled={fileLoading}
+                        onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).showModal()}>
+                        {
+                            fileLoading ?
+                                <span className="loading loading-ring loading-sm"></span>
+                                :
+                                <MdDeleteForever className="w-5 h-5" />
+                        }
+                        Delete
+                    </button>
 
-                {/* DaisyUI Delete Confirmation Modal */}
-                <dialog id="deleteModal" className="modal">
-                    <div className="modal-box">
-                        <h3 className="font-bold text-lg">Confirm Deletion</h3>
-                        <p className="py-4">Are you sure you want to delete this file?</p>
-                        <div className="modal-action">
-                            <button className="btn btn-error" onClick={handleDelete}>Yes, Delete</button>
-                            <button className="btn" onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).close()}>Cancel</button>
+                    {/* DaisyUI Delete Confirmation Modal */}
+                    <dialog id="deleteModal" className="modal">
+                        <div className="modal-box">
+                            <h3 className="font-bold text-lg">Confirm Deletion</h3>
+                            <p className="py-4">Are you sure you want to delete this file?</p>
+                            <div className="modal-action">
+                                <button className="btn btn-error" onClick={handleDelete}>Yes, Delete</button>
+                                <button className="btn" onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).close()}>Cancel</button>
+                            </div>
                         </div>
-                    </div>
-                </dialog>
-            </div>
-        )
+                    </dialog>
+                </div>
+            )
     );
 };
 

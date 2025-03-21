@@ -19,6 +19,7 @@ const Page = () => {
     const [fileUrl, setFileUrl] = React.useState<string>('None');
     const [saved, setSaved] = React.useState<boolean>(false);
     const [copied, setCopied] = React.useState<boolean>(false);
+    const [loading, setLoading] = React.useState<boolean>(true);
 
     const handleSave = async () => {
         if (text !== '') {
@@ -81,6 +82,7 @@ const Page = () => {
     // Use useCallback to memoize handleRefresh
     const handleRefresh = useCallback(() => {
         get_text(refid).then(res => {
+            setLoading(false);
             if (res.success) {
                 setText(res.data.text);
                 setFileUrl(res.data.fileUrl);
@@ -102,18 +104,28 @@ const Page = () => {
 
                 </div>
                 <div className='w-[80%] max-w-4xl'>
-                    <textarea
-                        className="textarea bg-base-300 border-transparent outline-none ring-0 
-                            focus:outline-none focus:border-transparent 
-                            focus-visible:outline-none focus-visible:ring-0 resize-none
-                            w-full h-72 "
-                        placeholder="Type here ..."
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                    ></textarea>
+                    {
+                        loading ?
+                            <div className="bg-base-300 border-transparent outline-none ring-0 
+                                            focus:outline-none focus:border-transparent 
+                                            focus-visible:outline-none focus-visible:ring-0 
+                                            resize-none w-full h-72 rounded-sm flex justify-center items-center">
+                                <span className="loading loading-dots loading-xl"></span>
+                            </div>
+                            :
+                            <textarea
+                                className="textarea bg-base-300 border-transparent outline-none ring-0 
+                                            focus:outline-none focus:border-transparent 
+                                            focus-visible:outline-none focus-visible:ring-0 resize-none
+                                            w-full h-72 "
+                                placeholder="Type here ..."
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
+                            ></textarea>
+                    }
                     <div className='flex gap-2 mt-3 px-2.5 items-center justify-between'>
                         <div className='flex gap-2'>
-                            <button className='btn btn-primary' onClick={handleSave}>
+                            <button className='btn btn-primary' onClick={handleSave} disabled={loading}>
                                 {
                                     saved ?
                                         <FaCheck className={`w-5 h-5 text-green-500 transition-opacity duration-300 ${saved ? "opacity-100" : "opacity-0"}`} />
@@ -122,7 +134,7 @@ const Page = () => {
                                 }
                                 Save
                             </button>
-                            <button className='btn btn-secondary' onClick={handleCopy}>
+                            <button className='btn btn-secondary' onClick={handleCopy} disabled={loading}>
                                 {
                                     copied ?
                                         <FaCheck className={`w-5 h-5 text-green-500 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0"}`} />
@@ -132,10 +144,12 @@ const Page = () => {
                                 Copy
                             </button>
                         </div>
-                        <button className='btn btn-ghost' onClick={handleRefresh}><IoMdRefresh className='w-6 h-6' />Refresh</button>
+                        <button className='btn btn-ghost' onClick={handleRefresh} disabled={loading}>
+                            <IoMdRefresh className='w-6 h-6' />Refresh
+                        </button>
                     </div>
                 </div>
-                <UploadFile refid={refid} fileUrl={fileUrl} setFileUrl={setFileUrl} />
+                <UploadFile refid={refid} fileUrl={fileUrl} setFileUrl={setFileUrl} loading={loading} />
             </div>
             <ToastContainer />
         </>
