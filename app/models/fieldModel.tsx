@@ -1,13 +1,21 @@
 import mongoose from 'mongoose';
 
 const fieldSchema = new mongoose.Schema({
-    text: {
-        type: String,
-        required: [true, 'Please enter text.']
-    },
     refid: {
         type: String,
         required: [true, 'Please enter refid.']
+    },
+    text: {
+        type: String,
+        default: ''
+    },
+    fileUrl: {
+        type: String,
+        default: 'None'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

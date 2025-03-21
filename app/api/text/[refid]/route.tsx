@@ -37,7 +37,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const field = await Field.findOne({ refid });
     if (field) {
-        return NextResponse.json({ text: field.text }, { status: 200 });
+        return NextResponse.json({ text: field.text, fileUrl: field.fileUrl }, { status: 200 });
     } else {
         return NextResponse.json({ "message": "Field not found." }, { status: 404 });
     }

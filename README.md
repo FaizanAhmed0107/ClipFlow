@@ -1,25 +1,31 @@
 # ClipFlow 📋⚡
 
-**ClipFlow** is an online clipboard built with Next.js that allows users to store and retrieve text using a unique `refid`. If you visit `https://clipflow.vercel.app`, a new `refid` will be automatically generated, and you will be redirected to it.
+**ClipFlow** is an online clipboard built with Next.js that allows users to store and retrieve text and files using a unique `refid`. If you visit `https://clipflow.vercel.app`, a new `refid` will be automatically generated, and you will be redirected to it.
 
 ## 🛠️ Features
 
 - **Auto-Generated RefIDs**: Visiting `https://clipflow.vercel.app` creates a unique `refid` and redirects you.
-- **Persistent Storage**: Each `refid` gets its own text storage area.
-- **Instant Access**: Retrieve or modify stored text by visiting `https://clipflow.vercel.app/{refid}`.
+- **Persistent Storage**: Each `refid` gets its own text and file storage.
+- **Instant Access**: Retrieve or modify stored text and files by visiting `https://clipflow.vercel.app/{refid}`.
 - **Real-time Syncing**: Updates are automatically saved.
+- **File Sharing**: Upload and download files linked to each `refid`.
 - **Simple & Secure**: No logins required, ensuring privacy.
 - **Minimalist UI**: Clean, distraction-free interface.
 
 ## 📌 How It Works
 
 1. **Visit ClipFlow**: Open `https://clipflow.vercel.app`.
+
    - A new `refid` will be created, and you will be redirected to `https://clipflow.vercel.app/{new-refid}`.
-2. **Store Text**: Type or paste text into the page.
 
-3. **Retrieve Later**: Open the same URL (`https://clipflow.vercel.app/{refid}`) anytime to view or modify stored content.
+2. **Store Text & Files**:
 
-4. **Update Anytime**: Modify text as needed and save them for later or others.
+   - Type or paste text into the page.
+   - Upload files to associate with the `refid`.
+
+3. **Retrieve Later**: Open the same URL (`https://clipflow.vercel.app/{refid}`) anytime to view, modify, or download stored content.
+
+4. **Update Anytime**: Modify text and upload new files as needed.
 
 ## 🚀 Tech Stack
 
@@ -33,7 +39,8 @@
 ### Backend
 
 - **Node.js**: JavaScript runtime.
-- **MongoDB**: Stores text mapped to each `refid`.
+- **MongoDB**: Stores text and file metadata mapped to each `refid`.
+- **Google Drive** : Stores uploaded files.
 
 ## 🛠️ Setup Instructions
 
@@ -41,6 +48,7 @@
 
 - Node.js (v18+)
 - MongoDB (local or cloud instance)
+- Google Drive
 
 ### Installation
 
