@@ -10,6 +10,7 @@ import CopyToClipboard from './CopyToClipboard';
 import post_text from '../api_requests/post_text';
 import get_text from '../api_requests/get_text';
 import UploadFile from './UploadFile';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
 
 const Page = () => {
     const params = useParams();
@@ -20,21 +21,61 @@ const Page = () => {
     const [copied, setCopied] = React.useState<boolean>(false);
 
     const handleSave = async () => {
-        const res = await post_text(refid, text);
-        if (res.success) {
-            setSaved(true);
-            setTimeout(() => setSaved(false), 2000); // Reset icon after 2 seconds
-        }
-        else {
-            console.log(res.message);
+        if (text !== '') {
+            const res = await post_text(refid, text);
+            if (res.success) {
+                setSaved(true);
+                setTimeout(() => setSaved(false), 2000); // Reset icon after 2 seconds
+            }
+            else {
+                toast.error(res.message, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+            }
+        } else {
+            toast.error('No text Entered!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                closeOnClick: true,
+                draggable: true,
+                theme: "dark",
+                transition: Bounce,
+            });
         }
     }
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(text).then(() => {
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000); // Reset icon after 2 seconds
-        }).catch(err => console.error("Copy failed:", err));
+        if (text !== '') {
+            navigator.clipboard.writeText(text).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000); // Reset icon after 2 seconds
+            }).catch(err => {
+                console.log(err);
+                toast.error('copy Failed!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: "dark",
+                    transition: Bounce,
+                })
+            }
+            );
+        } else {
+            toast.error('No text to copy!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                closeOnClick: true,
+                draggable: true,
+                theme: "dark",
+                transition: Bounce,
+            });
+        }
     }
 
     // Use useCallback to memoize handleRefresh
@@ -96,6 +137,7 @@ const Page = () => {
                 </div>
                 <UploadFile refid={refid} fileUrl={fileUrl} setFileUrl={setFileUrl} />
             </div>
+            <ToastContainer />
         </>
     )
 }

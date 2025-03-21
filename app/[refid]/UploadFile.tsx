@@ -4,7 +4,8 @@ import get_name from "../api_requests/get_name";
 import { LuBookOpenText } from "react-icons/lu";
 import { MdDeleteForever } from "react-icons/md";
 import upload_file from "../api_requests/upload_file";
-import delete_file from "../api_requests/delete_file"; // Import delete API function
+import delete_file from "../api_requests/delete_file";
+import { Bounce, toast } from "react-toastify";
 
 interface Props {
     fileUrl: string;
@@ -29,10 +30,24 @@ const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
             if (res.success) {
                 setFileUrl(res.data.url);
             } else {
-                console.log(res.message);
+                toast.error(res.message, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: "dark",
+                    transition: Bounce,
+                });
             }
         } else {
-            console.log('empty');
+            toast.error('No file selected!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                closeOnClick: true,
+                draggable: true,
+                theme: "dark",
+                transition: Bounce,
+            });
         }
     };
 
@@ -48,10 +63,25 @@ const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
             if (res.success) {
                 setFileUrl("None");
             } else {
-                console.log(res.message);
+                toast.error(res.message, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: "dark",
+                    transition: Bounce,
+                });
             }
         } catch (error) {
             console.error("Error deleting file:", error);
+            toast.error("Error deleting file:", {
+                position: "bottom-right",
+                autoClose: 5000,
+                closeOnClick: true,
+                draggable: true,
+                theme: "dark",
+                transition: Bounce,
+            });
         }
     };
 
@@ -60,7 +90,14 @@ const UploadFile = ({ fileUrl, refid, setFileUrl }: Props) => {
             if (res.success) {
                 setName(res.data.name);
             } else {
-                console.log(res.message);
+                toast.error(res.message, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: "dark",
+                    transition: Bounce,
+                });
             }
         });
     }, [refid, fileUrl]);
