@@ -14,5 +14,5 @@ export default function Home() {
     <div className="flex items-center justify-center h-screen">
       <span className="loading loading-infinity loading-xl"></span>
     </div>
-  ); // Or show a loading spinner while redirecting
+  );
 }
