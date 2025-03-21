@@ -8,7 +8,7 @@ export default function Home() {
   useEffect(() => {
     const randomString = Math.random().toString(36).substring(2, 8);
     router.push(`/${randomString}`);
-  }, []);
+  }, [router]);
 
   return (
     <div className="flex items-center justify-center h-screen">
