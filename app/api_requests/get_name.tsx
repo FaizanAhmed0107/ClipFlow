@@ -1,9 +1,8 @@
-export default async function get_text(refid: string) {
+export default async function get_name(refid: string, fileUrl: string) {
     try {
-        const response = await fetch(`/api/text/${refid}`, {
+        const response = await fetch(`/api/upload/${refid}?fileUrl=${encodeURIComponent(fileUrl)}`, {
             method: 'GET'
         });
-
         if (response.ok) {
             const result = await response.json();
             return { success: true, data: result };

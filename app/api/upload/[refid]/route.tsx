@@ -69,14 +69,38 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ ref
                 { fileUrl },  // Update fields
                 { new: true }  // Return the updated document
             );
-            return NextResponse.json({ message: "File uploaded successfully", url: fileUrl }, { status: 201 });
+            return NextResponse.json({ message: "File uploaded successfully", url: field.fileUrl }, { status: 201 });
         }
 
         const field = await Field.create({ refid, fileUrl });
 
-        return NextResponse.json({ message: "File uploaded successfully", url: fileUrl }, { status: 201 });
+        return NextResponse.json({ message: "File uploaded successfully", url: field.fileUrl }, { status: 201 });
     } catch (error) {
         console.error("Upload Error:", error);
         return NextResponse.json({ message: "File upload failed" }, { status: 500 });
+    }
+}
+
+export async function GET(req: NextRequest) {
+    try {
+        const fileUrl = req.nextUrl.searchParams.get("fileUrl");
+        if (!fileUrl) {
+            return NextResponse.json({ message: "File URL is required" }, { status: 400 });
+        }
+
+        const fileId = fileUrl.split("/").slice(-2, -1)[0]; // Extract file ID from URL
+        if (!fileId) {
+            return NextResponse.json({ message: "Invalid File URL" }, { status: 400 });
+        }
+
+        const response = await drive.files.get({
+            fileId: fileId,
+            fields: "name",
+        });
+
+        return NextResponse.json({ name: response.data.name }, { status: 200 });
+    } catch (error) {
+        console.error("Fetch Error:", error);
+        return NextResponse.json({ message: "Failed to retrieve file name" }, { status: 500 });
     }
 }

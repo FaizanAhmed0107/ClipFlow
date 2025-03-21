@@ -9,11 +9,13 @@ import { IoMdRefresh } from "react-icons/io";
 import CopyToClipboard from './CopyToClipboard';
 import post_text from '../api_requests/post_text';
 import get_text from '../api_requests/get_text';
+import UploadFile from './UploadFile';
 
 const Page = () => {
     const params = useParams();
     const refid = params?.refid as string;
     const [text, setText] = React.useState<string>('');
+    const [fileUrl, setFileUrl] = React.useState<string>('None');
     const [saved, setSaved] = React.useState<boolean>(false);
     const [copied, setCopied] = React.useState<boolean>(false);
 
@@ -38,8 +40,10 @@ const Page = () => {
     // Use useCallback to memoize handleRefresh
     const handleRefresh = useCallback(() => {
         get_text(refid).then(res => {
-            console.log(res.data);
-            setText(res.data);
+            if (res.success) {
+                setText(res.data.text);
+                setFileUrl(res.data.fileUrl);
+            }
         });
     }, [refid]); // Only change if refid changes
 
@@ -90,7 +94,7 @@ const Page = () => {
                         <button className='btn btn-ghost' onClick={handleRefresh}><IoMdRefresh className='w-6 h-6' />Refresh</button>
                     </div>
                 </div>
-                <input type="file" className="file-input w-[80%] max-w-4xl" />
+                <UploadFile refid={refid} fileUrl={fileUrl} setFileUrl={setFileUrl} />
             </div>
         </>
     )
