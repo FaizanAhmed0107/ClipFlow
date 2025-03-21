@@ -6,7 +6,6 @@ import { MdDeleteForever } from "react-icons/md";
 import upload_file from "../api_requests/upload_file";
 import delete_file from "../api_requests/delete_file";
 import { Bounce, toast } from "react-toastify";
-import { set } from "mongoose";
 
 interface Props {
     fileUrl: string;
