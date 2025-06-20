@@ -4,15 +4,26 @@ import Field from "../../../models/fieldModel";
 import connectDB from "@/app/config/dbConnect";
 
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.NEXT_PUBLIC_LOCATION;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const getCredentials = () => {
+    const base64Credentials = process.env.GOOGLE_CREDS;
+    if (!base64Credentials) {
+        throw new Error("Google credentials not found in environment variables");
+    }
 
-const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
-oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+    // Decode base64 and parse JSON
+    const credentials = JSON.parse(
+        Buffer.from(base64Credentials, "base64").toString("utf-8")
+    );
 
-const drive = google.drive({ version: "v3", auth: oauth2Client });
+    return credentials;
+};
+
+const auth = new google.auth.GoogleAuth({
+    credentials: getCredentials(),
+    scopes: ["https://www.googleapis.com/auth/drive"],
+});
+
+const drive = google.drive({ version: "v3", auth });
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ refid: string }>; }) {
     try {
