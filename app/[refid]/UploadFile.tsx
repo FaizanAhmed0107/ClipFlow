@@ -119,7 +119,7 @@ const UploadFile = ({ fileUrl, refid, setFileUrl, loading }: Props) => {
             <span className="loading loading-bars loading-xl"></span>
         ) :
             fileUrl === 'None' ? (
-                <div className="flex w-[80%] gap-2.5 justify-between max-w-4xl">
+                <div className="flex flex-col sm:flex-row w-[80%] gap-2.5 justify-between max-w-4xl">
                     <input type="file" onChange={handleFileChange} className="file-input w-full border rounded-lg focus:outline-none" />
                     <button className="btn btn-primary" disabled={fileLoading} onClick={handleFileUpload}>
                         {
@@ -132,21 +132,23 @@ const UploadFile = ({ fileUrl, refid, setFileUrl, loading }: Props) => {
                     </button>
                 </div>
             ) : (
-                <div className="flex w-[80%] gap-2.5 justify-between max-w-4xl content-center">
+                <div className="flex flex-col sm:flex-row w-[80%] gap-2.5 justify-between max-w-4xl content-center">
                     <p className="w-full border rounded-lg flex items-center p-2">{name}</p>
-                    <button className="btn btn-primary flex items-center gap-2" onClick={handleView}>
-                        <LuBookOpenText className="w-5 h-5" /> View
-                    </button>
-                    <button className="btn btn-error flex items-center gap-2" disabled={fileLoading}
-                        onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).showModal()}>
-                        {
-                            fileLoading ?
-                                <span className="loading loading-ring loading-sm"></span>
-                                :
-                                <MdDeleteForever className="w-5 h-5" />
-                        }
-                        Delete
-                    </button>
+                    <div className="flex gap-2.5 w-full">
+                        <button className="btn btn-primary flex items-center gap-2 flex-1" onClick={handleView}>
+                            <LuBookOpenText className="w-5 h-5" /> View
+                        </button>
+                        <button className="btn btn-error flex items-center gap-2 flex-1" disabled={fileLoading}
+                            onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).showModal()}>
+                            {
+                                fileLoading ?
+                                    <span className="loading loading-ring loading-sm"></span>
+                                    :
+                                    <MdDeleteForever className="w-5 h-5" />
+                            }
+                            Delete
+                        </button>
+                    </div>
 
                     {/* DaisyUI Delete Confirmation Modal */}
                     <dialog id="deleteModal" className="modal">
