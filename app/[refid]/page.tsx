@@ -123,9 +123,9 @@ const Page = () => {
                                 onChange={(e) => setText(e.target.value)}
                             ></textarea>
                     }
-                    <div className='flex gap-2 mt-3 px-2.5 items-center justify-between'>
+                    <div className='flex flex-col sm:flex-row gap-2 mt-3 px-2.5 sm:items-center sm:justify-between'>
                         <div className='flex gap-2'>
-                            <button className='btn btn-primary' onClick={handleSave} disabled={loading}>
+                            <button className='btn btn-primary flex-1 sm:w-auto' onClick={handleSave} disabled={loading}>
                                 {
                                     saved ?
                                         <FaCheck className={`w-5 h-5 text-green-500 transition-opacity duration-300 ${saved ? "opacity-100" : "opacity-0"}`} />
@@ -134,7 +134,7 @@ const Page = () => {
                                 }
                                 Save
                             </button>
-                            <button className='btn btn-secondary' onClick={handleCopy} disabled={loading}>
+                            <button className='btn btn-secondary flex-1 sm:w-auto' onClick={handleCopy} disabled={loading}>
                                 {
                                     copied ?
                                         <FaCheck className={`w-5 h-5 text-green-500 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0"}`} />
