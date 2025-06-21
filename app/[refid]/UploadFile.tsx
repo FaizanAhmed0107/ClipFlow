@@ -134,11 +134,11 @@ const UploadFile = ({ fileUrl, refid, setFileUrl, loading }: Props) => {
             ) : (
                 <div className="flex flex-col sm:flex-row w-[80%] gap-2.5 justify-between max-w-4xl content-center">
                     <p className="w-full border rounded-lg flex items-center p-2">{name}</p>
-                    <div className="flex gap-2.5 w-full">
-                        <button className="btn btn-primary flex items-center gap-2 flex-1" onClick={handleView}>
+                    <div className="flex flex-row gap-2.5 w-full sm:w-auto">
+                        <button className="btn btn-primary flex items-center gap-2 flex-1 sm:w-auto" onClick={handleView}>
                             <LuBookOpenText className="w-5 h-5" /> View
                         </button>
-                        <button className="btn btn-error flex items-center gap-2 flex-1" disabled={fileLoading}
+                        <button className="btn btn-error flex items-center gap-2 flex-1 sm:w-auto" disabled={fileLoading}
                             onClick={() => (document.getElementById("deleteModal") as HTMLDialogElement).showModal()}>
                             {
                                 fileLoading ?
